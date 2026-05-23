@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html data-bs-theme="light">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>Energy Converter - SMV</title>
+    <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,400,700&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Afacad+Flux&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Agdasima&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alice&amp;display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Alumni+Sans+Pinstripe&amp;display=swap">
+    <link rel="stylesheet" href="assets/fonts/ionicons.min.css">
+    <link rel="stylesheet" href="assets/css/bss-overrides.css">
+    <link rel="stylesheet" href="assets/css/pikaday.min.css">
+    <style>
+        .converter-card {
+            box-shadow: 0px 0px 11px;
+            border-radius: 17px;
+            background: var(--bs-body-bg);
+        }
+
+        .converter-result {
+            box-shadow: 0px 0px 4px;
+            border-radius: 10px;
+            cursor: pointer;
+            min-height: 126px;
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+
+        .converter-result:hover {
+            transform: translateY(-2px);
+            box-shadow: 0px 0px 9px;
+        }
+
+        .converter-value {
+            font-family: Lato, sans-serif;
+            font-size: 25px;
+            overflow-wrap: anywhere;
+        }
+
+        .converter-label {
+            font-family: Agdasima, sans-serif;
+            font-size: 27px;
+        }
+
+        .converter-help {
+            font-family: Lato, sans-serif;
+            font-size: 17px;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg fixed-top mt-0 pt-2 mb-2 pb-2 portfolio-navbar gradient navbar-dark">
+        <div class="container"><a class="navbar-brand logo" href="index.html" style="font-size: 26px;font-weight: bold;">Sebastian Montillo Vega</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navbarNav"><span class="visually-hidden">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/CV.html">CV</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Publications.html">Publications</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/EnergyConverter.html">Energy Converter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/ContactInfor.html" style="color: var(--bs-warning);">Contact Me</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main class="page">
+        <section class="mt-0 pt-5 portfolio-block">
+            <div class="container">
+                <div class="mb-4 heading">
+                    <h2 style="font-size: 40px;">Energy Unit Converter</h2>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-xl-9">
+                        <div class="converter-card p-4 mb-4">
+                            <div class="row align-items-end justify-content-center">
+                                <div class="col-md-7 mb-3">
+                                    <label class="form-label" for="energy-value" style="font-size: 24px;font-family: Agdasima, sans-serif;">Energy Value</label><input class="form-control form-control-lg" type="number" id="energy-value" value="1" step="any" inputmode="decimal" style="font-size: 24px;">
+                                </div>
+                                <div class="col-md-5 mb-3">
+                                    <label class="form-label" for="energy-unit" style="font-size: 24px;font-family: Agdasima, sans-serif;">Unit</label><select class="form-select form-select-lg" id="energy-unit" style="font-size: 22px;">
+                                        <option value="eV" selected="">eV (Electron Volt)</option>
+                                        <option value="Ha">Ha (Hartree)</option>
+                                        <option value="kJmol">kJ/mol</option>
+                                        <option value="kcalmol">kcal/mol</option>
+                                        <option value="wavenumber">cm^-1 (Wavenumber)</option>
+                                        <option value="kelvin">K (kBT)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <p class="text-muted mb-0 converter-help">Conversions are referenced through electron volts using CODATA physical constants. Click any result value to copy it.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center g-3 mb-4" id="conversion-results">
+                    <div class="col-md-4">
+                        <div class="converter-result p-3 text-center" data-unit="eV">
+                            <p class="mb-1 converter-label">eV</p>
+                            <p class="mb-0 converter-value" id="result-eV">1</p>
+                            <p class="text-muted mb-0">Electron Volt</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="converter-result p-3 text-center" data-unit="Ha">
+                            <p class="mb-1 converter-label">Ha</p>
+                            <p class="mb-0 converter-value" id="result-Ha">0.0367493</p>
+                            <p class="text-muted mb-0">Hartree</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="converter-result p-3 text-center" data-unit="kJmol">
+                            <p class="mb-1 converter-label">kJ/mol</p>
+                            <p class="mb-0 converter-value" id="result-kJmol">96.4853</p>
+                            <p class="text-muted mb-0">Kilo Joules per mol</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="converter-result p-3 text-center" data-unit="kcalmol">
+                            <p class="mb-1 converter-label">kcal/mol</p>
+                            <p class="mb-0 converter-value" id="result-kcalmol">23.0605</p>
+                            <p class="text-muted mb-0">kilo Calories per mol</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="converter-result p-3 text-center" data-unit="wavenumber">
+                            <p class="mb-1 converter-label">&lambda; / cm<sup>-1</sup></p>
+                            <p class="mb-0 converter-value" id="result-wavenumber">8065.54</p>
+                            <p class="text-muted mb-0">Wavenumber</p>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="converter-result p-3 text-center" data-unit="kelvin">
+                            <p class="mb-1 converter-label">T / K</p>
+                            <p class="mb-0 converter-value" id="result-kelvin">11604.5</p>
+                            <p class="text-muted mb-0">Kelvin kBT</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-xl-9">
+                        <div class="alert alert-primary text-center d-none" role="alert" id="copy-alert" style="font-size: 18px;">Value copied to clipboard.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="py-3 page-footer border-top">
+        <div class="container my-4">
+            <div class="links"><a href="CV.html">About me</a><a href="ContactInfor.html">Contact me</a><a href="Publications.html">Publications</a><a href="EnergyConverter.html">Energy converter</a></div>
+            <div class="mb-2">
+                <p class="mt-2 mb-1" style="font-size: 20px;">sebastian.montillovega@gmail.com</p>
+            </div>
+            <div class="mt-2 social-icons"><a class="me-3" href="https://github.com/Smontillo" target="_blank"><i class="icon ion-social-github"></i></a><a class="me-3" href="https://scholar.google.com/citations?user=ZayQPHEAAAAJ&amp;hl=en" target="_blank"><i class="icon ion-social-google"></i></a><a class="me-3" href="http://www.linkedin.com/in/sebastian-montillovega" target="_blank"><i class="icon ion-social-linkedin"></i></a></div>
+        </div>
+    </footer>
+    <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="assets/js/pikaday.min.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script>
+        (function () {
+            var units = {
+                eV: { label: 'eV', eV: 1 },
+                Ha: { label: 'Ha', eV: 27.211386245988 },
+                kJmol: { label: 'kJ/mol', eV: 1 / 96.48533212331 },
+                kcalmol: { label: 'kcal/mol', eV: 1 / 23.060547830619 },
+                wavenumber: { label: 'cm^-1', eV: 1 / 8065.5439373492 },
+                kelvin: { label: 'K', eV: 8.617333262145e-5 }
+            };
+            var valueInput = document.getElementById('energy-value');
+            var unitSelect = document.getElementById('energy-unit');
+            var alertBox = document.getElementById('copy-alert');
+            var alertTimer = null;
+
+            function formatValue(value) {
+                if (!Number.isFinite(value)) {
+                    return '';
+                }
+                if (value === 0) {
+                    return '0';
+                }
+                var absValue = Math.abs(value);
+                if (absValue >= 1000000 || absValue < 0.0001) {
+                    return value.toExponential(8);
+                }
+                return Number(value.toPrecision(9)).toString();
+            }
+
+            function updateConversions() {
+                var inputValue = parseFloat(valueInput.value);
+                var selectedUnit = unitSelect.value;
+                if (!Number.isFinite(inputValue)) {
+                    Object.keys(units).forEach(function (unitKey) {
+                        document.getElementById('result-' + unitKey).textContent = '';
+                    });
+                    return;
+                }
+                var energyEv = inputValue * units[selectedUnit].eV;
+                Object.keys(units).forEach(function (unitKey) {
+                    var convertedValue = energyEv / units[unitKey].eV;
+                    document.getElementById('result-' + unitKey).textContent = formatValue(convertedValue);
+                });
+            }
+
+            function copyText(text) {
+                if (navigator.clipboard && window.isSecureContext) {
+                    return navigator.clipboard.writeText(text);
+                }
+                var textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-9999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                return Promise.resolve();
+            }
+
+            function showCopiedMessage() {
+                alertBox.classList.remove('d-none');
+                if (alertTimer) {
+                    window.clearTimeout(alertTimer);
+                }
+                alertTimer = window.setTimeout(function () {
+                    alertBox.classList.add('d-none');
+                }, 1500);
+            }
+
+            valueInput.addEventListener('input', updateConversions);
+            unitSelect.addEventListener('change', updateConversions);
+            document.querySelectorAll('.converter-result').forEach(function (card) {
+                card.addEventListener('click', function () {
+                    var unitKey = card.getAttribute('data-unit');
+                    var value = document.getElementById('result-' + unitKey).textContent;
+                    if (value) {
+                        copyText(value + ' ' + units[unitKey].label).then(showCopiedMessage);
+                    }
+                });
+            });
+            updateConversions();
+        })();
+    </script>
+</body>
+
+</html>

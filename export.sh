@@ -2,7 +2,7 @@
 set -e  # stop on first error
 
 # go to the repo folder
-cd "/Users/montillo214/Documents/Documents/WebPage/smontillo.github.io"
+cd "/Users/abysswalker/Documents/Documents/WebPage/smontillo.github.io"
 
 git add .
 
