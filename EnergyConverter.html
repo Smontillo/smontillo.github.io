@@ -42,12 +42,59 @@
 
         .converter-label {
             font-family: Agdasima, sans-serif;
-            font-size: 27px;
+            font-size: 34px;
+            font-weight: bold;
+        }
+
+        .converter-unit-icon {
+            height: 42px;
+            margin-left: 10px;
+            object-fit: contain;
+            vertical-align: middle;
+            width: 42px;
         }
 
         .converter-help {
             font-family: Lato, sans-serif;
+            font-size: 15px;
+        }
+
+        .converter-action-help {
+            font-family: Lato, sans-serif;
             font-size: 17px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .converter-control {
+            border-color: var(--bs-primary);
+            border-radius: 999px;
+            color: var(--bs-primary);
+            min-height: 50px;
+        }
+
+        .converter-control:focus {
+            border-color: var(--bs-primary);
+            box-shadow: 0 0 0 .25rem rgba(var(--bs-primary-rgb), .25);
+            color: var(--bs-primary);
+        }
+
+        .converter-unit-button {
+            align-items: center;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .boltzmann-plot {
+            height: 320px;
+            width: 100%;
+        }
+
+        .boltzmann-title {
+            font-family: Agdasima, sans-serif;
+            font-size: 34px;
+            font-weight: bold;
+            text-align: center;
         }
     </style>
 </head>
@@ -72,70 +119,94 @@
                 <div class="mb-4 heading">
                     <h2 style="font-size: 40px;">Energy Unit Converter</h2>
                 </div>
+                <div class="mb-4" style="text-align: center;"><img class="img-fluid" src="assets/img/EnergyConverter/EnergyLogo.png" alt="Energy converter logo" style="max-width: 340px;"></div>
                 <div class="row justify-content-center">
                     <div class="col-lg-10 col-xl-9">
                         <div class="converter-card p-4 mb-4">
                             <div class="row align-items-end justify-content-center">
                                 <div class="col-md-7 mb-3">
-                                    <label class="form-label" for="energy-value" style="font-size: 24px;font-family: Agdasima, sans-serif;">Energy Value</label><input class="form-control form-control-lg" type="number" id="energy-value" value="1" step="any" inputmode="decimal" style="font-size: 24px;">
+                                    <label class="form-label d-block text-center" for="energy-value" style="font-size: 24px;font-family: Agdasima, sans-serif;">Energy Value</label><input class="form-control form-control-lg converter-control" type="number" id="energy-value" value="1" step="any" inputmode="decimal" style="font-size: 24px;">
                                 </div>
                                 <div class="col-md-5 mb-3">
-                                    <label class="form-label" for="energy-unit" style="font-size: 24px;font-family: Agdasima, sans-serif;">Unit</label><select class="form-select form-select-lg" id="energy-unit" style="font-size: 22px;">
+                                    <label class="form-label d-block text-center" for="energy-unit-button" style="font-size: 24px;font-family: Agdasima, sans-serif;">Unit</label><select class="d-none" id="energy-unit">
                                         <option value="eV" selected="">eV (Electron Volt)</option>
                                         <option value="Ha">Ha (Hartree)</option>
                                         <option value="kJmol">kJ/mol</option>
                                         <option value="kcalmol">kcal/mol</option>
-                                        <option value="wavenumber">cm^-1 (Wavenumber)</option>
+                                        <option value="wavenumber">cm⁻¹ (Wavenumber)</option>
                                         <option value="kelvin">K (kBT)</option>
                                     </select>
+                                    <div class="dropdown"><button class="btn btn-outline-primary dropdown-toggle w-100 text-start converter-control converter-unit-button" type="button" id="energy-unit-button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 22px;">eV (Electron Volt)</button>
+                                        <ul class="dropdown-menu w-100" aria-labelledby="energy-unit-button">
+                                            <li><button class="dropdown-item" type="button" data-unit="eV" style="font-size: 20px;">eV (Electron Volt)</button></li>
+                                            <li><button class="dropdown-item" type="button" data-unit="Ha" style="font-size: 20px;">Ha (Hartree)</button></li>
+                                            <li><button class="dropdown-item" type="button" data-unit="kJmol" style="font-size: 20px;">kJ/mol</button></li>
+                                            <li><button class="dropdown-item" type="button" data-unit="kcalmol" style="font-size: 20px;">kcal/mol</button></li>
+                                            <li><button class="dropdown-item" type="button" data-unit="wavenumber" style="font-size: 20px;">cm<sup>-1</sup> (Wavenumber)</button></li>
+                                            <li><button class="dropdown-item" type="button" data-unit="kelvin" style="font-size: 20px;">K (k<sub>B</sub>T)</button></li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="text-muted mb-0 converter-help">Conversions are referenced through electron volts using CODATA physical constants. Click any result value to copy it.</p>
+                            <p class="text-muted mb-0 converter-action-help">Click any result value to copy it.</p>
                         </div>
                     </div>
                 </div>
-                <div class="row justify-content-center g-3 mb-4" id="conversion-results">
+                <div class="row justify-content-center g-3 mb-5" id="conversion-results">
                     <div class="col-md-4">
                         <div class="converter-result p-3 text-center" data-unit="eV">
-                            <p class="mb-1 converter-label">eV</p>
+                            <p class="mb-1 converter-label">eV<img class="converter-unit-icon" src="assets/img/EnergyConverter/EnergyeV.png" alt="Electron volt icon"></p>
                             <p class="mb-0 converter-value" id="result-eV">1</p>
                             <p class="text-muted mb-0">Electron Volt</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="converter-result p-3 text-center" data-unit="Ha">
-                            <p class="mb-1 converter-label">Ha</p>
+                            <p class="mb-1 converter-label">Ha<img class="converter-unit-icon" src="assets/img/EnergyConverter/EnergyEh.png" alt="Hartree icon"></p>
                             <p class="mb-0 converter-value" id="result-Ha">0.0367493</p>
                             <p class="text-muted mb-0">Hartree</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="converter-result p-3 text-center" data-unit="kJmol">
-                            <p class="mb-1 converter-label">kJ/mol</p>
+                            <p class="mb-1 converter-label">kJ/mol<img class="converter-unit-icon" src="assets/img/EnergyConverter/EnergykJ.png" alt="Kilojoule per mol icon"></p>
                             <p class="mb-0 converter-value" id="result-kJmol">96.4853</p>
                             <p class="text-muted mb-0">Kilo Joules per mol</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="converter-result p-3 text-center" data-unit="kcalmol">
-                            <p class="mb-1 converter-label">kcal/mol</p>
+                            <p class="mb-1 converter-label">kcal/mol<img class="converter-unit-icon" src="assets/img/EnergyConverter/Energykcal.png" alt="Kilocalorie per mol icon"></p>
                             <p class="mb-0 converter-value" id="result-kcalmol">23.0605</p>
                             <p class="text-muted mb-0">kilo Calories per mol</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="converter-result p-3 text-center" data-unit="wavenumber">
-                            <p class="mb-1 converter-label">&lambda; / cm<sup>-1</sup></p>
+                            <p class="mb-1 converter-label">cm<sup>-1</sup><img class="converter-unit-icon" src="assets/img/EnergyConverter/EnergyWn.png" alt="Wavenumber icon"></p>
                             <p class="mb-0 converter-value" id="result-wavenumber">8065.54</p>
                             <p class="text-muted mb-0">Wavenumber</p>
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="converter-result p-3 text-center" data-unit="kelvin">
-                            <p class="mb-1 converter-label">T / K</p>
+                            <p class="mb-1 converter-label">K<img class="converter-unit-icon" src="assets/img/EnergyConverter/EnergyK.png" alt="Kelvin icon"></p>
                             <p class="mb-0 converter-value" id="result-kelvin">11604.5</p>
-                            <p class="text-muted mb-0">Kelvin kBT</p>
+                            <p class="text-muted mb-0">Kelvin k<sub>B</sub>T</p>
                         </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-xl-9">
+                        <div class="converter-card p-4 mb-4">
+                            <p class="mb-2 boltzmann-title">Boltzmann Distribution</p>
+                            <p class="text-muted mb-3 text-center converter-help" id="boltzmann-temperature">Temperature: 11604.5 K</p><canvas class="boltzmann-plot" id="boltzmann-canvas" aria-label="Boltzmann distribution plot"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-10 col-xl-9">
+                        <p class="text-muted mb-4 converter-help">Conversions are referenced through electron volts using CODATA physical constants.</p>
                     </div>
                 </div>
                 <div class="row justify-content-center">
@@ -170,8 +241,12 @@
             };
             var valueInput = document.getElementById('energy-value');
             var unitSelect = document.getElementById('energy-unit');
+            var unitButton = document.getElementById('energy-unit-button');
             var alertBox = document.getElementById('copy-alert');
+            var boltzmannCanvas = document.getElementById('boltzmann-canvas');
+            var boltzmannTemperature = document.getElementById('boltzmann-temperature');
             var alertTimer = null;
+            var latestEnergyEv = 1;
 
             function formatValue(value) {
                 if (!Number.isFinite(value)) {
@@ -187,6 +262,16 @@
                 return Number(value.toPrecision(9)).toString();
             }
 
+            function formatScientificTick(value) {
+                if (!Number.isFinite(value)) {
+                    return '';
+                }
+                if (value === 0) {
+                    return '0';
+                }
+                return value.toExponential(2);
+            }
+
             function updateConversions() {
                 var inputValue = parseFloat(valueInput.value);
                 var selectedUnit = unitSelect.value;
@@ -194,13 +279,149 @@
                     Object.keys(units).forEach(function (unitKey) {
                         document.getElementById('result-' + unitKey).textContent = '';
                     });
+                    latestEnergyEv = null;
+                    drawBoltzmannPlot();
                     return;
                 }
                 var energyEv = inputValue * units[selectedUnit].eV;
+                latestEnergyEv = energyEv;
                 Object.keys(units).forEach(function (unitKey) {
                     var convertedValue = energyEv / units[unitKey].eV;
                     document.getElementById('result-' + unitKey).textContent = formatValue(convertedValue);
                 });
+                drawBoltzmannPlot();
+            }
+
+            function drawBoltzmannPlot() {
+                var context = boltzmannCanvas.getContext('2d');
+                var pixelRatio = window.devicePixelRatio || 1;
+                var displayWidth = boltzmannCanvas.clientWidth;
+                var displayHeight = boltzmannCanvas.clientHeight;
+                boltzmannCanvas.width = displayWidth * pixelRatio;
+                boltzmannCanvas.height = displayHeight * pixelRatio;
+                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+                context.clearRect(0, 0, displayWidth, displayHeight);
+
+                var paddingLeft = 82;
+                var paddingRight = 24;
+                var paddingTop = 24;
+                var paddingBottom = 70;
+                var plotWidth = displayWidth - paddingLeft - paddingRight;
+                var plotHeight = displayHeight - paddingTop - paddingBottom;
+                var temperatureK = latestEnergyEv / units.kelvin.eV;
+                var kbtEv = temperatureK * units.kelvin.eV;
+
+                context.font = '18px Lato, sans-serif';
+                context.lineWidth = 1;
+                context.strokeStyle = '#d8d8d8';
+                context.fillStyle = '#6c757d';
+
+                if (!Number.isFinite(temperatureK) || temperatureK <= 0 || plotWidth <= 0 || plotHeight <= 0) {
+                    boltzmannTemperature.textContent = 'Temperature must be positive to draw the Boltzmann factor.';
+                    context.textAlign = 'center';
+                    context.fillText('Enter a positive energy or temperature.', displayWidth / 2, displayHeight / 2);
+                    return;
+                }
+
+                boltzmannTemperature.textContent = 'Temperature: ' + formatValue(temperatureK) + ' K';
+
+                context.beginPath();
+                context.moveTo(paddingLeft, paddingTop);
+                context.lineTo(paddingLeft, paddingTop + plotHeight);
+                context.lineTo(paddingLeft + plotWidth, paddingTop + plotHeight);
+                context.strokeStyle = '#5a5a5a';
+                context.stroke();
+
+                for (var tick = 0; tick <= 5; tick += 1) {
+                    var x = paddingLeft + plotWidth * tick / 5;
+                    var y = paddingTop + plotHeight;
+                    context.fillStyle = '#6c757d';
+                    context.textAlign = 'center';
+                    context.fillText(formatScientificTick(tick * kbtEv / units.wavenumber.eV), x, y + 22);
+                }
+
+                for (var yTick = 0; yTick <= 4; yTick += 1) {
+                    var probability = yTick / 4;
+                    var yPosition = paddingTop + plotHeight - plotHeight * probability;
+                    context.fillStyle = '#6c757d';
+                    context.textAlign = 'right';
+                    context.fillText(probability.toFixed(2), paddingLeft - 10, yPosition + 4);
+                }
+
+                context.beginPath();
+                for (var point = 0; point <= 240; point += 1) {
+                    var reducedEnergy = 5 * point / 240;
+                    var boltzmannFactor = Math.exp(-reducedEnergy);
+                    var curveX = paddingLeft + plotWidth * point / 240;
+                    var curveY = paddingTop + plotHeight - plotHeight * boltzmannFactor;
+                    if (point === 0) {
+                        context.moveTo(curveX, curveY);
+                    } else {
+                        context.lineTo(curveX, curveY);
+                    }
+                }
+                context.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--bs-primary').trim() || '#0d6efd';
+                context.lineWidth = 3;
+                context.stroke();
+
+                var thermalX = paddingLeft + plotWidth / 5;
+                context.beginPath();
+                context.moveTo(thermalX, paddingTop);
+                context.lineTo(thermalX, paddingTop + plotHeight);
+                context.strokeStyle = '#000000';
+                context.lineWidth = 2;
+                context.setLineDash([6, 5]);
+                context.stroke();
+                context.setLineDash([]);
+                context.fillStyle = '#000000';
+                context.textAlign = 'center';
+                context.font = '30px Lato, sans-serif';
+                drawSubscriptLabel(context, 'k', 'B', 'T', paddingLeft + plotWidth - 8, paddingTop + 16);
+
+                context.fillStyle = '#212529';
+                context.textAlign = 'center';
+                context.font = '18px Lato, sans-serif';
+                drawXAxisLabel(context, 'Energy (cm', '-1', ')', paddingLeft + plotWidth / 2, displayHeight - 10);
+                context.save();
+                context.translate(18, paddingTop + plotHeight / 2);
+                context.rotate(-Math.PI / 2);
+                context.textAlign = 'center';
+                context.textBaseline = 'middle';
+                context.fillText('Relative population', 0, 0);
+                context.restore();
+                context.textBaseline = 'alphabetic';
+            }
+
+            function drawXAxisLabel(context, labelStart, superscript, labelEnd, centerX, baseY) {
+                context.font = '18px Lato, sans-serif';
+                var startWidth = context.measureText(labelStart).width;
+                context.font = '13px Lato, sans-serif';
+                var superscriptWidth = context.measureText(superscript).width;
+                context.font = '18px Lato, sans-serif';
+                var endWidth = context.measureText(labelEnd).width;
+                var labelX = centerX - (startWidth + superscriptWidth + endWidth) / 2;
+                context.textAlign = 'left';
+                context.fillText(labelStart, labelX, baseY);
+                context.font = '13px Lato, sans-serif';
+                context.fillText(superscript, labelX + startWidth, baseY - 8);
+                context.font = '18px Lato, sans-serif';
+                context.fillText(labelEnd, labelX + startWidth + superscriptWidth, baseY);
+            }
+
+            function drawSubscriptLabel(context, labelStart, subscript, labelEnd, rightX, baseY) {
+                context.font = '30px Lato, sans-serif';
+                var startWidth = context.measureText(labelStart).width;
+                context.font = '20px Lato, sans-serif';
+                var subscriptWidth = context.measureText(subscript).width;
+                context.font = '30px Lato, sans-serif';
+                var endWidth = context.measureText(labelEnd).width;
+                var labelX = rightX - startWidth - subscriptWidth - endWidth;
+                context.textAlign = 'left';
+                context.fillText(labelStart, labelX, baseY);
+                context.font = '20px Lato, sans-serif';
+                context.fillText(subscript, labelX + startWidth, baseY + 7);
+                context.font = '30px Lato, sans-serif';
+                context.fillText(labelEnd, labelX + startWidth + subscriptWidth, baseY);
             }
 
             function copyText(text) {
@@ -230,7 +451,13 @@
             }
 
             valueInput.addEventListener('input', updateConversions);
-            unitSelect.addEventListener('change', updateConversions);
+            document.querySelectorAll('.dropdown-item[data-unit]').forEach(function (item) {
+                item.addEventListener('click', function () {
+                    unitSelect.value = item.getAttribute('data-unit');
+                    unitButton.innerHTML = item.innerHTML;
+                    updateConversions();
+                });
+            });
             document.querySelectorAll('.converter-result').forEach(function (card) {
                 card.addEventListener('click', function () {
                     var unitKey = card.getAttribute('data-unit');
@@ -241,6 +468,7 @@
                 });
             });
             updateConversions();
+            window.addEventListener('resize', drawBoltzmannPlot);
         })();
     </script>
 </body>
